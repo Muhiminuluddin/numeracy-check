@@ -1,0 +1,29 @@
+[project]
+name = "numeracycheck"
+version = "1.0.0"
+description = "A numeracy competency quiz for consulting teams"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "pytest-cov>=5.0", "ruff>=0.5"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+addopts = "-v --strict-markers"
+
+[tool.ruff]
+line-length = 100
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "D"]
+ignore = ["D203", "D213"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["D101", "D102", "D103", "D107", "D401"]
+
+[tool.coverage.run]
+source = ["src/numeracycheck"]
+omit = ["src/numeracycheck/gui/*", "src/numeracycheck/__main__.py", "src/numeracycheck/config.py"]
