@@ -1,0 +1,25 @@
+id,category,type,prompt,options,answer,explanation
+Q01,Identifying primes,multiple_choice,Which of these is a prime number?,21|27|29|33,29,29 has no factors except 1 and itself.
+Q02,Identifying primes,multiple_choice,Which of these is NOT a prime number?,13|17|19|21,21,21 = 3 x 7.
+Q03,Identifying primes,numeric,What is the smallest prime number?,,2,"2 is the smallest, and the only even prime."
+Q04,Identifying primes,multiple_choice,Which of these is prime?,49|51|53|57,53,"49 = 7 x 7, 51 = 3 x 17 and 57 = 3 x 19."
+Q05,Identifying primes,multiple_choice,How many prime numbers are there between 1 and 10?,3|4|5|6,4,"They are 2, 3, 5 and 7."
+Q06,Identifying primes,multiple_choice,Which is the only even prime number?,2|4|6|8,2,Every other even number divides by 2.
+Q07,Identifying primes,multiple_choice,Which of these is prime?,91|93|97|99,97,"91 = 7 x 13, 93 = 3 x 31 and 99 = 9 x 11."
+Q08,Primes and composites,numeric,What is the next prime number after 23?,,29,24 to 28 all have smaller factors.
+Q09,Primes and composites,multiple_choice,What is the prime number immediately before 20?,17|18|19|21,19,19 has no factors except 1 and itself.
+Q10,Primes and composites,multiple_choice,The number 1 is classed as which of these?,prime|composite|neither|even,neither,A prime needs exactly two different factors; 1 has one.
+Q11,Primes and composites,multiple_choice,How many prime numbers are there between 20 and 30?,1|2|3|4,2,They are 23 and 29.
+Q12,Primes and composites,multiple_choice,Which of these is a composite number?,31|37|39|41,39,39 = 3 x 13.
+Q13,Primes and composites,numeric,What is the next prime number after 31?,,37,32 to 36 all have smaller factors.
+Q14,Prime factors,numeric,What is the largest prime factor of 30?,,5,30 = 2 x 3 x 5.
+Q15,Prime factors,multiple_choice,What is 60 written as a product of primes?,2x2x3x5|2x3x5|2x2x15|4x15,2x2x3x5,60 = 4 x 15 = 2 x 2 x 3 x 5.
+Q16,Prime factors,multiple_choice,How many different prime factors does 84 have?,2|3|4|5,3,"84 = 2 x 2 x 3 x 7, so the primes are 2, 3 and 7."
+Q17,Prime factors,numeric,What is the largest prime factor of 91?,,13,91 = 7 x 13.
+Q18,Prime factors,multiple_choice,What is the smallest prime factor of 143?,7|11|13|17,11,143 = 11 x 13.
+Q19,Prime factors,multiple_choice,Which of these is a prime factor of 105?,4|5|6|8,5,105 = 3 x 5 x 7.
+Q20,Working with primes,multiple_choice,An encryption key multiplies the primes 11 and 13. What is the product?,121|143|156|169,143,11 x 13 = 143.
+Q21,Working with primes,multiple_choice,How many prime numbers are there between 1 and 20?,6|7|8|9,8,"They are 2, 3, 5, 7, 11, 13, 17 and 19."
+Q22,Working with primes,multiple_choice,Which pair are twin primes?,11 and 13|13 and 15|15 and 17|17 and 21,11 and 13,Twin primes differ by 2 and both must be prime.
+Q23,Working with primes,multiple_choice,What is the sum of the first three prime numbers?,6|9|10|12,10,2 + 3 + 5 = 10.
+Q24,Working with primes,numeric,What is the 5th prime number?,,11,"The order is 2, 3, 5, 7, 11."

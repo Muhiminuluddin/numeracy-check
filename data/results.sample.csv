@@ -1,0 +1,5 @@
+attempt_id,candidate_name,category,timestamp,questions_asked,correct_answers,score_percentage,grade,duration_seconds
+a1b2c3d4,Muhiminul Islam,All categories,2026-08-24T09:12:31+00:00,8,7,87.5,Distinction,243
+e5f6g7h8,Priya Shah,Percentages,2026-08-24T11:02:07+00:00,8,5,62.5,Pass,188
+i9j0k1l2,Tom Warner,Linear equations,2026-08-25T14:41:55+00:00,8,4,50.0,Refer for support,301
+m3n4o5p6,Muhiminul Islam,Square numbers,2026-08-27T08:30:12+00:00,10,9,90.0,Distinction,275
