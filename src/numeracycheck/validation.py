@@ -1,8 +1,8 @@
-"""The rules that decide whether an answer is valid and whether it is right.
+"""These are the rules that I have added that decide if an answer is valid and correct.
 
-Every function here is a **pure function**: it uses only the values it is
-given, reads no files and remembers nothing between calls, so the same input
-always produces the same result. That is what makes them quick to test.
+Every function here is a **pure function** this means it uses the
+values it is given, so the input always matches the result.
+That is what allows it to be quick to test.
 """
 
 from __future__ import annotations
@@ -10,14 +10,15 @@ from __future__ import annotations
 import re
 from typing import NamedTuple
 
-#: Answers are compared with a small tolerance so a rounded decimal still passes.
+#: Answers are compared with this tolerance I have added so a rounded decimal
+# still passes.
 TOLERANCE = 1e-6
 
-#: Score needed for each outcome band.
+#: Score needed for the types of bands that someone might achieve.
 DISTINCTION = 80.0
 PASS = 60.0
 
-#: Must start with a letter; letters, spaces, hyphens and apostrophes only.
+#: Must start with a letter and only letters, spaces, hyphens and apostrophes can be used.
 NAME_PATTERN = re.compile(r"^[A-Za-z][A-Za-z'\- ]*$")
 
 QUESTION_COLUMNS = ("id", "category", "type", "prompt", "options", "answer")
@@ -25,7 +26,7 @@ QUESTION_TYPES = ("multiple_choice", "numeric")
 
 
 class Check(NamedTuple):
-    """The result of a check: whether it passed, and why not if it failed."""
+    """The result of the check includes whether it passed and if it failed it says why."""
 
     ok: bool
     message: str
@@ -54,16 +55,16 @@ def validate_name(name: object) -> Check:
 
 
 def clean_answer(raw: object) -> str:
-    """Tidy an answer so two ways of writing the same thing look the same.
+    """Fix an answer so two ways of writing the same thing look the same.
 
-    Trims spaces, lowercases and removes commas, so " 29 ", "29" and "1,009"
+    Removes spaces, lowercases and removes commas, so " 29 ", "29" and "1,009"
     all come out in one form.
 
     Args:
-        raw: The value the user submitted.
+        raw: The value entered by the user.
 
     Returns:
-        str: The tidied answer, or an empty string if it is unusable.
+        str: The tidied answer, or an empty string if it is not able to be used.
 
     """
     if not isinstance(raw, str):
@@ -75,11 +76,10 @@ def to_number(raw: object) -> float | None:
     """Turn an answer into a number where possible.
 
     Args:
-        raw: The value the user submitted.
+        raw: The value entered by the user.
 
     Returns:
-        float | None: The number, or None if it is not one. None is returned
-        rather than raising because typing letters is expected, not exceptional.
+        A float if the answer is a number, or None if it is not.
 
     """
     try:
@@ -116,17 +116,17 @@ def check_chosen_option(choice: object, options: tuple) -> Check:
 
 
 def answers_match(given: object, correct: object) -> bool:
-    """Decide whether an answer should be marked right.
+    """Check if the user's answer matches the correct answer.
 
-    Numbers are compared as numbers, so "29" and "29.0" both match 29.
+    Numbers are compared as numbers, so "29" and "29.0" are treated as the same.
     Anything else is compared as text, which covers answers like "2x2x3x5".
 
     Args:
-        given: The user's answer.
-        correct: The answer stored in the question file.
+        given: The answer that was entered by the user.
+        correct: The correct answer.
 
     Returns:
-        bool: True if the answer is right.
+        bool: True if the answer is correct, otherwise False.
 
     """
     given_number = to_number(given)
@@ -145,14 +145,15 @@ def score_percentage(correct: int, total: int) -> float:
     """Turn a raw score into a percentage, rounded to one decimal place.
 
     Args:
-        correct: Questions answered correctly.
-        total: Questions asked.
+        correct: How many questions did the user manage to answer correctly.
+        total: The total number of questions asked.
 
     Returns:
         float: The percentage, or 0.0 when no questions were asked.
 
     Raises:
-        ValueError: If the numbers are negative or correct is above total.
+        ValueError: If the numbers are negative or the amount of
+        correct answers is above total number of questions..
 
     """
     if correct < 0 or total < 0:
@@ -196,18 +197,21 @@ def split_options(raw: object) -> tuple[str, ...]:
 
 
 def check_question_row(row: object) -> Check:
-    """Check one row of the question file before it is used.
+    """Validate a single question row before it is used.
 
-    The file is edited in Excel by other people, so rows are checked rather
-    than trusted. Doing it here means the rule can be tested on its own.
+    Question data is edited in Excel by different people, so we validate each row
+    instead of assuming the data is correct.
 
     Args:
         row: A row read from the CSV file.
 
     Returns:
-        Check: Valid when every column is filled in, the type is one we
-        support, and a multiple-choice row offers at least two options
-        including the stated answer.
+        Check: Valid  when all required fields are filled in,
+        the question type is supported and multiple choice questions
+        have at least two options including the correct answer.
+
+
+
 
     """
     if not isinstance(row, dict):

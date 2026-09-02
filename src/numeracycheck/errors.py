@@ -1,17 +1,17 @@
-"""The three errors this application raises on purpose.
+"""Custom errors used by the application.
 
-Having its own errors means the screens can catch problems the application
-knows about, without also hiding real programming mistakes.
+These errors let the app handle expected problems without hiding
+actual programming errors that need to be fixed.
 """
 
 
 class QuizError(Exception):
-    """Base class for every error this application raises on purpose."""
+    """Base class for errors raised intentionally by the quiz application."""
 
 
 class DataError(QuizError):
-    """A question or results file could not be read, written or understood."""
+    """Raised when a question or results file could not be read, written or understood."""
 
 
 class QuizStateError(QuizError):
-    """A quiz was used in the wrong order, such as scoring before finishing."""
+    """Raised when a quiz is used in the wrong order, such as scoring before finishing."""
