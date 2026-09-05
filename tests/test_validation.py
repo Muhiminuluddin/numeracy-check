@@ -1,7 +1,6 @@
 """Tests for the rules in validation.py.
 
-Each test covers one rule and checks the cases that matter for it, including
-the values at the edge of a rule where mistakes usually hide.
+Each test covers one rule and checks the cases.
 """
 
 from __future__ import annotations
@@ -18,12 +17,12 @@ GOOD_ROW = {
 
 
 class TestNames:
-    def test_accepts_real_names(self):
+    def test_valid_names(self):
         assert validation.validate_name("Ada Lovelace").ok
         assert validation.validate_name("O'Neill").ok
         assert validation.validate_name("  Muhiminul  ").ok
 
-    def test_rejects_bad_names_with_a_reason(self):
+    def test_invalid_names(self):
         assert "before starting" in validation.validate_name("").message
         assert "at least 2" in validation.validate_name("A").message
         assert "letters, spaces" in validation.validate_name("R2D2").message
@@ -31,8 +30,8 @@ class TestNames:
         assert not validation.validate_name(None).ok
 
 
-class TestReadingAnswers:
-    def test_tidies_answers_and_reads_them_as_numbers(self):
+class TestAnswers:
+    def test_clean_answer(self):
         assert validation.clean_answer("  29  ") == "29"
         assert validation.clean_answer("1,009") == "1009"
         assert validation.clean_answer("2X2X3X5") == "2x2x3x5"
@@ -44,8 +43,8 @@ class TestReadingAnswers:
         assert validation.to_number("") is None
 
 
-class TestCheckingWhatWasSubmitted:
-    def test_guards_both_kinds_of_answer_box(self):
+class TestAnswerChecks:
+    def test_answer_checks(self):
         assert validation.check_typed_answer("29").ok
         assert "before submitting" in validation.check_typed_answer("  ").message
         assert "must be a number" in validation.check_typed_answer("twenty").message
@@ -57,7 +56,7 @@ class TestCheckingWhatWasSubmitted:
 
 
 class TestMarking:
-    def test_marks_matching_answers_right_and_others_wrong(self):
+    def test_marking(self):
         assert validation.answers_match("29", "29")
         assert validation.answers_match("29.0", "29")
         assert validation.answers_match(" 2 x 2 x 3 x 5 ", "2x2x3x5")
@@ -69,18 +68,18 @@ class TestMarking:
 
 
 class TestScoring:
-    def test_works_out_the_percentage(self):
+    def test_percentage(self):
         assert validation.score_percentage(7, 8) == 87.5
         assert validation.score_percentage(2, 3) == 66.7
         assert validation.score_percentage(0, 0) == 0.0
 
-    def test_applies_the_bands_at_their_edges(self):
+    def test_grade_bands(self):
         assert validation.grade_for_score(80.0) == "Distinction"
         assert validation.grade_for_score(79.9) == "Pass"
         assert validation.grade_for_score(60.0) == "Pass"
         assert validation.grade_for_score(59.9) == "Refer for support"
 
-    def test_rejects_impossible_scores_and_percentages(self):
+    def test_bad_scores(self):
         with pytest.raises(ValueError):
             validation.score_percentage(-1, 5)
         with pytest.raises(ValueError):
@@ -89,19 +88,19 @@ class TestScoring:
             validation.grade_for_score(100.1)
 
 
-class TestSmallHelpers:
-    def test_formats_the_time_and_splits_the_options(self):
+class TestHelpers:
+    def test_helpers(self):
         assert validation.format_duration(95) == "01:35"
         assert validation.format_duration(-5) == "00:00"
         assert validation.split_options("21|27 | 29") == ("21", "27", "29")
         assert validation.split_options("") == ()
 
 
-class TestCheckingTheQuestionFile:
-    def test_accepts_a_good_row(self):
+class TestQuestionRows:
+    def test_good_question_row(self):
         assert validation.check_question_row(GOOD_ROW).ok
 
-    def test_rejects_a_row_the_app_cannot_use(self):
+    def test_bad_question_rows(self):
         missing = {k: v for k, v in GOOD_ROW.items() if k != "answer"}
         assert "Missing column" in validation.check_question_row(missing).message
         assert "must not be empty" in validation.check_question_row(

@@ -15,7 +15,7 @@ def quiz(questions, clock):
 
 
 class TestStarting:
-    def test_needs_questions_and_a_valid_name(self, questions):
+    def test_starting_a_quiz(self, questions):
         with pytest.raises(QuizStateError, match="at least one question"):
             Quiz("Ada", [])
         with pytest.raises(ValueError):
@@ -23,8 +23,8 @@ class TestStarting:
         assert Quiz("  Ada  ", questions).name == "Ada"
 
 
-class TestWorkingThrough:
-    def test_moves_through_the_questions_then_finishes(self, quiz, questions):
+class TestProgress:
+    def test_progress(self, quiz, questions):
         assert quiz.current is questions[0]
         assert quiz.progress() == "Question 1 of 2"
         quiz.submit("29")
@@ -34,7 +34,7 @@ class TestWorkingThrough:
         with pytest.raises(QuizStateError, match="has finished"):
             _ = quiz.current
 
-    def test_an_answer_that_fails_its_checks_does_not_move_on(self, quiz):
+    def test_bad_answer_stays_put(self, quiz):
         result = quiz.submit("")
         assert not result.accepted
         assert quiz.progress() == "Question 1 of 2"
@@ -42,7 +42,7 @@ class TestWorkingThrough:
 
 
 class TestMarking:
-    def test_marks_right_and_wrong_answers_and_explains(self, quiz):
+    def test_marking(self, quiz):
         right = quiz.submit("29")
         assert right.accepted and right.correct
         assert quiz.correct_count == 1
@@ -52,14 +52,14 @@ class TestMarking:
         assert "2" in wrong.message
 
 
-class TestScoringAndSaving:
-    def test_scores_and_grades_the_attempt(self, quiz):
+class TestScoring:
+    def test_scoring(self, quiz):
         quiz.submit("29")
         quiz.submit("7")
         assert quiz.percentage() == 50.0
         assert quiz.grade() == "Refer for support"
 
-    def test_builds_a_complete_record_but_not_before_finishing(self, quiz, clock):
+    def test_saving_the_attempt(self, quiz, clock):
         quiz.submit("29")
         with pytest.raises(QuizStateError, match="Finish every question"):
             quiz.to_attempt()

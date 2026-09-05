@@ -1,6 +1,7 @@
-"""Shared test fixtures.
+"""Fixtures shared between the tests.
 
-File-based fixtures use pytest's tmp_path, so no test touches the real data.
+The file-based fixtures use pytest's tmp_path which keeps the tests from
+changing the real quiz data.
 """
 
 from __future__ import annotations

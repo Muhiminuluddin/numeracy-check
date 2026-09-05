@@ -1,8 +1,8 @@
-"""handles reading and writing the quiz data to files.
+"""Deals with loading and saving the questions and results.
 
-Keeping file access here means the rest of the app does not need to deal
-with the files directly. It also makes it easier to switch from CSV to
-something else later if I wanted to.
+The file handling is also kept here so the rest of the app does not
+have to deal with it. This means the way the data is stored can be changed later
+without affecting the rest of the app.
 """
 
 from __future__ import annotations
@@ -48,7 +48,7 @@ class QuestionBank:
     def from_csv(cls, path: str | Path) -> "QuestionBank":
         """Load questions from a CSV file.
 
-        Invalid rows are skipped and logged so one bad row does not stop
+        Invalid rows are skipped this means that one wrong rowdoes not stop
         the rest of the questions from loading.
 
         Args:
@@ -218,7 +218,7 @@ def filter_by_name(attempts: Iterable[Attempt], name: str) -> tuple[Attempt, ...
 
     Args:
         attempts: The attempts to search through and filter.
-        name: The name to match. If no name is given, all attempts are returned.
+        name: The name that needs to match. If no name is given then all attempts are returned.
 
     Returns:
         tuple[Attempt, ...]: The matching attempts.

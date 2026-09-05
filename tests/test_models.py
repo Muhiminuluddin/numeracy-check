@@ -13,8 +13,8 @@ from numeracycheck.models import (
 )
 
 
-class TestBuildingQuestions:
-    def test_builds_the_right_kind_from_a_row(self):
+class TestBuilding:
+    def test_builds_question_types(self):
         choice = Question.from_row({
             "id": "Q01", "category": "Identifying primes", "type": "multiple_choice",
             "prompt": "Which of these is prime?", "options": "21|27|29|33",
@@ -30,7 +30,7 @@ class TestBuildingQuestions:
         assert isinstance(typed, NumericQuestion)
         assert typed.options == ()
 
-    def test_rejects_a_bad_row_and_cannot_be_used_on_its_own(self):
+    def test_rejects_bad_row(self):
         with pytest.raises(DataError):
             Question.from_row({"id": "Q1", "category": "", "type": "numeric"})
         with pytest.raises(TypeError):
@@ -38,20 +38,20 @@ class TestBuildingQuestions:
 
 
 class TestMarking:
-    def test_marks_and_checks_both_kinds(self, typed_question, choice_question):
+    def test_marking(self, typed_question, choice_question):
         assert typed_question.is_correct(" 2.0 ")
         assert not typed_question.check("two").ok
         assert choice_question.is_correct("29")
         assert not choice_question.is_correct("27")
         assert not choice_question.check("99").ok
 
-    def test_questions_cannot_be_changed(self, typed_question):
+    def test_frozen(self, typed_question):
         with pytest.raises(Exception):
             typed_question.answer = "42"
 
 
 class TestAttempt:
-    def test_survives_a_round_trip_but_rejects_a_damaged_row(self, attempt):
+    def test_attempt_round_trip(self, attempt):
         row = attempt.to_row()
         assert set(row) == set(Attempt.COLUMNS)
         assert row["percentage"] == "87.5"
