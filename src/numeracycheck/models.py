@@ -1,8 +1,8 @@
 """Models used by the application and the main models are questions and quiz attempts.
 
 Question is an abstract base class that defines what all question types need
-to do. The specific question types then provide the details. This lets the
-quiz handle different question types in the same way.
+to do. The specific question types then provides the details, this lets the
+quiz handle different question types.
 """
 
 from __future__ import annotations
@@ -18,7 +18,7 @@ from .errors import DataError
 
 @dataclass(frozen=True)
 class Question(ABC):
-    """A quiz question that once loaded, it cannot be changed."""
+    """A quiz question that once loaded it means it cannot be changed."""
 
     question_id: str
     category: str
