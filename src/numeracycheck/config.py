@@ -1,7 +1,7 @@
-"""File paths and limits, all in one place.
+"""File paths used by the app.
 
-Paths can be changed with environment variables so the app can point at a
-shared question file without editing the code.
+These can be changed using environment variables, so the app can use a different or shared
+question file without me needing to change the code.
 """
 
 from __future__ import annotations
