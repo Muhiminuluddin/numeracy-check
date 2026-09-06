@@ -4,7 +4,7 @@ Run from the repository root with ``src`` on the import path::
 
     PYTHONPATH=src python -m numeracycheck
 
-or, after ``pip install -e .``, simply::
+or after ``pip install -e .``, simply::
 
     python -m numeracycheck
 """
