@@ -1,6 +1,6 @@
-"""Tkinter presentation layer.
+"""Tkinter interface for the application.
 
-This subpackage is the only part of the application that imports ``tkinter``.
-Keeping it isolated means the automated tests, which run headless in
-continuous integration, never need a display server.
+This is the only part of the application that imports Tkinter.
+Keeping the GUI separate means the automated tests can run without
+needing a display.
 """
