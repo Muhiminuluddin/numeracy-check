@@ -41,7 +41,7 @@ class Question(ABC):
 
     @classmethod
     def from_row(cls, row: dict) -> "Question":
-        """Create the approporiate question type from a row in the CSV file.
+        """Create the appropriate question type from a row in the CSV file.
 
         Args:
             row: A row read from the question CSV file.

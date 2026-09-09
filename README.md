@@ -1,7 +1,7 @@
 # NumeracyCheck
 
 I have built a desktop quiz that checks and records knowledge of prime numbers for consulting teams.
-I built it in Python with Tkinter it saves every attempt to a CSV file and is tested automatically every time I upload a change.
+I built it in Python with Tkinter, it saves every attempt to a CSV file and is tested automatically every time I upload a change.
 
 
 ---
@@ -34,7 +34,7 @@ This project I have created called NumeracyCheck addresses these issues. A user 
 
 ### 2.1 User journey
 
-The application I have made has four screens and one loop. This means that it is impossible to reach end of the quiz without completing every question.
+The application I have made has four screens and one loop. This means that it is impossible to reach the end of the quiz without completing every question.
 
 ```mermaid
 flowchart LR
@@ -102,7 +102,7 @@ The finished screens closely match the initial screen designs I made on Figma.
 | --- | --- | --- | --- |
 | NFR1 | Portability | Runs on Windows, macOS and Linux without an installer | Uses only the Python Standard library. Tkinter is included with Python so no additional software is required |
 | NFR2 | Reliability | A single invalid row should not cause the application to crash | Each row is validated as it is loaded. Invalid rows are skipped and reported without stopping the program |
-| NFR3 | Performance | Process any screen change in under 200ms | Data is loaded into memory, once reducing repeated file access and keeping validation fast |
+| NFR3 | Performance | Process any screen change in under 200ms | Data is loaded into memory reducing repeated file access and keeping validation fast |
 | NFR4 | Easy to change | Marking rules can be changed without touching the interface | Validation logic is kept separate from the GUI, so rules can be modified independently |
 | NFR5 | Easy to test | Rules can be tested without opening the application window | Validation code is independent of the interface, allowing automated unit tests to run without launching the GUI |
 | NFR6 | Data safety | Validation should not overwrite the original data | The original CSV file is left unchanged. Results are written to a separate output file. |
@@ -272,7 +272,7 @@ def score_percentage(correct: int, total: int) -> float:
     return round(correct / total * 100, 1) if total else 0.0
 ```
 
-I spent the most amount of time developing my marking functionality. While testing my application I discovered users entered their responses in various ways. Some examples included entering their response as `29.0` versus `29`, or some users had leading/trailing spaces around their numeric entries (i.e., `2 x 2 x 3 x 5`). As a result to solve this issue, I developed an additional method called `answers_match`. This method assists in making answers look identical prior to comparison. Additionally, for numbers, it accepts a very small degree of variation. Thus, if there is a slight difference in how the user enters their answer, it does not reject the answer rather marking it wrong.
+I spent the most amount of time developing my marking functionality. While testing my application I discovered that there could be the possibly that users might enter their responses in various ways. Some examples included entering their response as `29.0` versus `29`, or some users had leading/trailing spaces around their numeric entries (i.e., `2 x 2 x 3 x 5`). As a result to solve this issue, I developed an additional method called `answers_match`. This method assists in making answers look identical prior to comparison. Additionally, for numbers, it accepts a very small degree of variation. Thus, if there is a slight difference in how the user enters their answer, it does not reject the answer and accepts it instead.
 
 ```python
 def answers_match(given: object, correct: object) -> bool:
@@ -319,7 +319,7 @@ class Question(ABC):
 
     @classmethod
     def from_row(cls, row: dict) -> "Question":
-        """Create the approporiate question type from a row in the CSV file."""
+        """Create the appropriate question type from a row in the CSV file."""
         result = validation.check_question_row(row)
         if not result.ok:
             raise DataError(result.message)
@@ -352,7 +352,7 @@ for line, row in enumerate(reader, start=2):
         skipped.append(message)
 ```
 
-`ResultsStore` is only responsible for reading and writing the results file, so any file related problens are translated into messages the user can act on.
+`ResultsStore` is only responsible for reading and writing the results file, so any file related problems are translated into messages the user can act on.
 
 ```python
 def save(self, attempt: Attempt) -> None:
@@ -379,7 +379,7 @@ def save(self, attempt: Attempt) -> None:
 
 ```python
 def submit(self, given: object) -> Feedback:
-    """Checks an answer after it marks it then records it and moves on."""
+    """Checks an answer. After it marks it then records it and moves on."""
     question = self.current
     check = question.check(given)
     if not check.ok:
@@ -454,13 +454,13 @@ I have conducted testing on three tiers.
 | Type | Scope of coverage | Rationale for this approach | Tool |
 | --- | --- | --- | --- |
 | Unit testing | Rules, Question & Result classes, quiz | The rules for pass/fail determination have to be accurate all the time and are fast to test separately. A mistake in determining the correctness of an answer would undermine the tool | pytest |
-| Tests with real files | Results saving & loading, loading of the questions file | If I had faked files, then the issue of repeating column headings and corrupt row ruining history screen would not have been detected. pytest gives a temporary folder to each test, so no real data gets modified. | pytest |
+| Tests with real files | Results saving & loading, loading of the questions file | If I had faked files, then the issue of repeating column headings and a wrong row which would ruin the history screen would not have been detected. pytest gives a temporary folder to each test, so no real data gets modified. | pytest |
 | Manual testing | Screens, keyboard interactions, popups | Automation of the desktop application would require too much overhead for the scale we're at now, and it is a matter of human judgement whether the message makes sense or not. | Test scenarios |
 
 These tests were done using **boundary value analysis**, the method I use at work, I look at the boundaries rather than a nice middle figure. According to the rule, if a grade is 80 percent or higher, then it is a distinction, therefore the test uses 79.9 and 80.0, and 59.9 and 60.0 for the passing boundary. Each field that the user can enter data into was also checked using bad inputs like blank, spaces, letters in number fields, too long a name, and command in a name.
 
 
-There were two factors that allowed the tests to be quick and efficient. First, none of the tests opens any windows, which allows them to work on the GitHub machines and secondly, the time counter and the random number geneator are submitted, which guarantees consistent results.
+There were two factors that allowed the tests to be quick and efficient. First, none of the tests opens any windows, which allows them to work on the GitHub machines and secondly, the time counter and the random number generator are submitted, which guarantees consistent results.
 
 ### 4.2 Manual test results
 
@@ -548,7 +548,7 @@ PYTHONPATH=src python -m numeracycheck
 | 60% to 79.9% | Pass | Competent, with specific gaps worth reviewing |
 | Below 60% | Refer for support | Book a session with your team lead |
 
-**Viewing and Exporting Results. Click on **View past results** and click **Apply to filter by Name or **Clear for all participants. **Export to CSV exports just the visible rows on the screen, so that way you can export one person's data without exporting everything.
+**Viewing and Exporting Results.** Click on **View past results** and click **Apply** to filter by Name or **Clear for all participants.** Export to CSV exports just the visible rows on the screen, so that way you can export one person's data without exporting everything.
 
 **Adding Questions**. Edit `data/questions.csv` using Excel, and for each new question enter a new row. Keep the current structure but change `type` to either `multiple_choice` with pipe-separated values in options, or to `numeric` and leave the options field blank. Save and close, and start the program again. Incorrect entry will give an error pointing out which row was incorrect.
 
@@ -562,7 +562,6 @@ cd numeracy-check
 python -m venv .venv
 source .venv/bin/activate      # Windows: .venv\Scripts\activate
 pip install -r requirements-dev.txt
-pip install -e .                # optional: lets you run `python -m numeracycheck`
 ```
 
 On Debian or Ubuntu, Tkinter is a separate package: `sudo apt install python3-tk`.
@@ -584,7 +583,7 @@ ruff check .                                    # lint, including docstrings
 - *New question class*: derive from `Question`, implement `check`, and add a branch to `Question.from_row`.
 - *New outcome class*: adjust the threshold values in `validation.py`, and then update `TestScoring` in `test_validation.py`.
 - *New storage system*: implement the same three methods as `ResultsStore`, and pass it to `QuizApp`.
-- *New screen*: define a `ttk.Frame` subclass with an `on_show` method`
+- *New screen*: define a `ttk.Frame` subclass with an `on_show` method
 
 **Releasing.** The merge process onto `main` runs the tests under Python 3.11 and 3.12. In order to bundle into a single file :
 
@@ -612,16 +611,16 @@ The error handling considered the environment of the office rather than that of 
 
 No part of the tool provides the feedback loop I outlined above. While attempts are stored with their topic (thus providing the data needed to find out "which topics do people struggle with?"), there is nothing summing it up. The manager has to filter by name, export the results to CSV, and analyse them in Excel. The topic summary would be the feature that would make the difference here.
 
-The UI lacks automated tests. Most of my twenty manual test cases are automated and could have been run on the build server, detecting an interface regression automatically instead of doing it manually every time. Automating a desktop application's interface is tricky, and that is why it needs to be planned upfront instead of avoided.
+I could have made my UI have automated tests as most of my twenty manual test cases possibly could have been automated and could have been run on the build server, detecting an interface regression automatically instead of doing it manually every time. Automating a desktop application's interface is tricky, and that is why it needs to be planned up front instead of avoided.
 
-I would reconsider CSV files. While they were the right choice from the point of view of adoption – since everyone can open results in Excel – there is nothing stopping two people from saving changes simultaneously, which will result in silent corruption of the file while stored in a network location. SQLite ships with Python could have been implemented.
-
+I would reconsider CSV files. While they were the right choice from the point of view of adoption – since everyone can open results in Excel – there is nothing stopping two people from saving changes simultaneously, which will result in silent corruption of the file while stored in a network location. SQLite ships with Python could have been used.
 
 The question bank is an advantage and a disadvantage. Everybody can input new questions in Excel, but no one can input any questions from the app, and a single typo will become apparent at the next startup.
 
-Also perhaps next time I would set up the CI pipeline earlier rather than at the end which would have helped me catch any bugs during my commits.
+Also perhaps next time I would do something differently in the connection of the project with GitHub. The fact is that I set up the pipeline in the second commit, while working locally for the whole week so it ran checks only when the project was ready. If I had done it earlier then it would have helped me caught more bugs in the development stage.
 
 If I proceeded with my plan, then after the topic breakdown on the result screen, the next step would be to create automated testing of the interface, and then to switch to SQLite.
+
 ---
 
 ## References
