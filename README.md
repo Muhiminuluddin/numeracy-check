@@ -551,7 +551,7 @@ PYTHONPATH=src python -m numeracycheck
 **Setting up.**
 
 ```bash
-git clone https://github.com/YOUR-USERNAME/numeracy-check.git
+git clone https://github.com/Muhiminuluddin/numeracy-check.git
 cd numeracy-check
 python -m venv .venv
 source .venv/bin/activate      # Windows: .venv\Scripts\activate
