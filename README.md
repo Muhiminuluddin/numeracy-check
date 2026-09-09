@@ -617,7 +617,7 @@ I would reconsider CSV files. While they were the right choice from the point of
 
 The question bank is an advantage and a disadvantage. Everybody can input new questions in Excel, but no one can input any questions from the app, and a single typo will become apparent at the next startup.
 
-Also perhaps next time I would do something differently in the connection of the project with GitHub. The fact is that I set up the pipeline in the second commit, while working locally for the whole week so it ran checks only when the project was ready. If I had done it earlier then it would have helped me caught more bugs in the development stage.
+Also perhaps next time I would do something differently in the connection of the project with GitHub. The fact is that I set up the pipeline in the second commit, while working locally for around 2 whole weeks so it ran checks only when the project was ready. If I had done it earlier then it would have helped me caught more bugs in the development stage.
 
 If I proceeded with my plan, then after the topic breakdown on the result screen, the next step would be to create automated testing of the interface, and then to switch to SQLite.
 
