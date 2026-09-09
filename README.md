@@ -511,6 +511,12 @@ To prove the tests really do fail when behaviour changes, I moved the distinctio
 | `test_models.py` | 5 | Building the right question type, marking, frozen classes, round trip |
 | **Total** | **31** | |
 
+The pull request below shows them passing before the change was merged into `main`.
+
+![Continuous integration passing](docs/images/ci-passing.png)
+
+![Checks passing on a pull request](docs/images/ci-pull-request.png)
+
 ---
 
 ## 5. Documentation
