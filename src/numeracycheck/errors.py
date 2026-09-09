@@ -14,5 +14,7 @@ class DataError(QuizError):
 
 
 class QuizStateError(QuizError):
-    """Raised when a quiz is used in the wrong order, for example giving a score before the user
-    finishes."""
+ """Raised when a quiz is used in the wrong order.
+
+ For example, giving a score before the user finishes.
+ """
