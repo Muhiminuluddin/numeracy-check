@@ -119,7 +119,7 @@ The finished screens closely match the initial screen designs I made on Figma.
 | Testing | [pytest](https://docs.pytest.org/) with [pytest-cov](https://pytest-cov.readthedocs.io/) | Pytest was chosen because it makes writing and running unit tests simple making sure validation works as expected. |
 | Style checking | [Ruff](https://docs.astral.sh/ruff/) | Was used to check for any issues and mistakes with codes and docstrings when I made them. |
 | Automatic checks | [GitHub Actions](https://docs.github.com/en/actions) | Runs the tests every time I upload a change. |
-| Packaging | [PyInstaller](https://pyinstaller.org/) | Pyinstaller means that the application can be run on another computer without Python needing to be installed. |
+| Packaging | [PyInstaller](https://pyinstaller.org/) | Pyinstaller means that the application can be run on another computer without Python needing to be installed. But I did not build the release for this submisssion however the command is in Section 5.2|
 
 ### 2.6 Code design
 
@@ -523,7 +523,7 @@ The pull request below shows them passing before the change was merged into `mai
 
 ### 5.1 User documentation
 
-**Installing.**  Ask IT for Python 3.11 and double-click `run.bat` on Windows or `run.sh` on macOS. From a terminal:
+**Installing.** Download Python 3.11 and double-click `run.bat` on Windows or `run.sh` on macOS. From a terminal:
 
 ```bash
 PYTHONPATH=src python -m numeracycheck
