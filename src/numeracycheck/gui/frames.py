@@ -279,7 +279,10 @@ class HistoryFrame(ttk.Frame):
                 attempt.timestamp.replace("T", " ").replace("+00:00", ""),
                 attempt.name, attempt.category,
                 f"{attempt.percentage:.0f}%", attempt.grade))
-        self.status.config(text=f"{len(self.attempts)} attempt(s) shown.")
+        if self.attempts:
+            self.status.config(text=f"{len(self.attempts)} attempt(s) shown.")
+        else:
+            self.status.config(text="No attempts saved yet.")
 
     def clear(self) -> None:
         """Remove the filter and reload."""
